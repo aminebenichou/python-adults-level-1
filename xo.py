@@ -27,7 +27,11 @@ def changeValues(player_input, player):
 
 
 turn = 1
-while True:
+running = True
+is_null= False
+winner=False
+digits =[]
+while running:
     player = 'x'
     if turn%2 == 0:
         player = 'o'
@@ -38,6 +42,32 @@ while True:
     changeValues(player_input, player)
     turn += 1
 
-# indexes[0][0] == indexes[0][1] == indexes[0][2]
-# indexes[1][0] == indexes[1][1] == indexes[1][2]
-# indexes[2][0] == indexes[2][1] == indexes[2][2]
+
+    y=0
+    
+    while y<len(indexes):
+        if (indexes[y][0] == indexes[y][1] == indexes[y][2]) or (
+            indexes[0][y] == indexes[1][y] == indexes[2][y]) or (
+            indexes[y][y] == indexes[1][1] == indexes[2][2]) or (
+            indexes[0][-1] == indexes[1][1] == indexes[2][0]):
+
+            table()
+            winner= True
+            running = False
+
+        if turn>9:
+            for element in indexes[y]:
+                try:
+                    number = int(element)
+                    digits.append(number)
+                except:
+                    print(f'')
+
+            if digits == []:
+                
+                running=False
+
+        y += 1
+
+    if winner:
+        print(f'congrats {player}')
