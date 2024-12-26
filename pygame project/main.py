@@ -9,21 +9,22 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 clock = pygame.time.Clock()
 running = True
 x, y = 100, 100
-
+score = 0
 food_coordinates = (random.randint(50, 950),random.randint(50, 450)) # set
 
 def eat_food():
-    global x, y, food_coordinates
+    global x, y, food_coordinates, score
     
     if x+20 > food_coordinates[0] > x-20 and y+20 > food_coordinates[1] > y-20:
         food_coordinates = (random.randint(50, 950),random.randint(50, 450))
-
+        score += 10
 font = pygame.font.SysFont('Arial', 46)
 text = font.render('Game Over', True, (255,0,0))
 text2 = font.render('Press Q to quit the game', True, (255,0,0))
 game_over = False
 while running:
     # poll for events
+    score_text = font.render(f'Score: {score} ', True, (255,0,0))
     
     # pygame.QUIT event means the user clicked X to close your window
     for event in pygame.event.get():
@@ -58,7 +59,7 @@ while running:
     pygame.draw.circle(screen, "purple", food_coordinates, 10, 10)
     
     eat_food()
-    
+    screen.blit(score_text, (10,10))
     # flip() the display to put your work on screen
 
     pygame.display.update()
